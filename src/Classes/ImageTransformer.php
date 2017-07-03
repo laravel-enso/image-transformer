@@ -25,6 +25,12 @@ class ImageTransformer
 
     public function resize(int $width, int $height)
     {
+        if ($this->extensionIsMissing()) {
+            \Log::warning(__("Please install php-gd or php-imagick extesion in to use the resize function"));
+
+            return false;
+        }
+
         foreach ($this->files as $file) {
             $this->resizeImage($file, $width, $height);
         }
@@ -61,5 +67,10 @@ class ImageTransformer
         }
 
         $image->save($file->getRealPath());
+    }
+
+    private function extensionIsMissing()
+    {
+        return !extension_loaded('gd') && !extension_loaded('imagick');
     }
 }
