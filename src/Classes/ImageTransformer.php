@@ -28,7 +28,7 @@ class ImageTransformer
         if ($this->extensionIsMissing()) {
             \Log::warning(__('Please install php-gd or php-imagick extesion in to use the resize function'));
 
-            return false;
+            return $this;
         }
 
         foreach ($this->files as $file) {
