@@ -16,9 +16,9 @@ class ImageTransformerServiceProvider extends ServiceProvider
 
     public function register()
     {
-    	$this->app->register(ImageServiceProvider::class);
+        $this->app->register(ImageServiceProvider::class);
 
-    	$loader = AliasLoader::getInstance();
-    	$loader->alias('Image', Image::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Image', Image::class);
     }
 }

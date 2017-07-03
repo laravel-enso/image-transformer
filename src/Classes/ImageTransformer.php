@@ -54,7 +54,7 @@ class ImageTransformer
             });
         }
 
-        if  ($image->height() > $height) {
+        if ($image->height() > $height) {
             $image->resize(null, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
