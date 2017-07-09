@@ -52,6 +52,12 @@ class ImageTransformer
 
     private function resizeImage(UploadedFile $file, int $width, int $height)
     {
+        $validator = \Validator::make(['file' => $file], ['file' => 'image']);
+
+        if ($validator->fails()) {
+            return false;
+        }
+
         $image = \Image::make($file->getRealPath());
 
         if ($image->width() > $width) {
