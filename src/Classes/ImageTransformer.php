@@ -26,7 +26,9 @@ class ImageTransformer
     public function resize(int $width, int $height)
     {
         if ($this->extensionIsMissing()) {
-            \Log::warning(__('Please install php-gd or php-imagick extesion in to use the resize function'));
+            \Log::warning(
+                __('Please install php-gd or php-imagick extesion in to use the resize function')
+            );
 
             return $this;
         }
@@ -52,9 +54,7 @@ class ImageTransformer
 
     private function resizeImage(UploadedFile $file, int $width, int $height)
     {
-        $validator = \Validator::make(['file' => $file], ['file' => 'image']);
-
-        if ($validator->fails()) {
+        if ($this->fileIsInvalid($file)) {
             return false;
         }
 
@@ -73,6 +73,13 @@ class ImageTransformer
         }
 
         $image->save($file->getRealPath());
+    }
+
+    private function fileIsInvalid(UploadedFile $file)
+    {
+        $validator = \Validator::make(['file' => $file], ['file' => 'image']);
+
+        return $validator->fails();
     }
 
     private function extensionIsMissing()
