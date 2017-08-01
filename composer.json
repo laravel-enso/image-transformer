@@ -21,7 +21,7 @@
     "require": {
         "php": ">=7.1.0",
         "laravel/framework": "5.4.*",
-        "ps/image-optimizer": "^1.2",
+        "ps/image-optimizer": "^1.1",
         "intervention/image": "^2.3"
     },
     "autoload": {
