@@ -55,7 +55,7 @@ class ImageTransformer
     private function resizeImage(UploadedFile $file, int $width, int $height)
     {
         if ($validator = $this->fileIsInvalid($file)) {
-            throw new \EnsoException(__("Trying to resize an invalid file"). ': '. $file->getRealPath());
+            throw new \EnsoException(__('Trying to resize an invalid file').': '.$file->getRealPath());
         }
 
         $image = \Image::make($file->getRealPath());
