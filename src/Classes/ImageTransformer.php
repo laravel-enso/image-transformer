@@ -42,9 +42,7 @@ class ImageTransformer
 
     private function optimizeImage(UploadedFile $file)
     {
-        $validator = \Validator::make(['file' => $file], ['file' => 'image']);
-
-        if ($validator->fails()) {
+        if ($this->fileIsNotPicture($file)) {
             return false;
         }
 
@@ -54,8 +52,8 @@ class ImageTransformer
 
     private function resizeImage(UploadedFile $file, int $width, int $height)
     {
-        if ($validator = $this->fileIsInvalid($file)) {
-            throw new \EnsoException(__("Trying to resize an invalid file"). ': '. $file->getRealPath());
+        if ($this->fileIsNotPicture($file)) {
+            return false;
         }
 
         $image = \Image::make($file->getRealPath());
@@ -75,13 +73,11 @@ class ImageTransformer
         $image->save($file->getRealPath());
     }
 
-    private function fileIsInvalid(UploadedFile $file)
+    private function fileIsNotPicture(UploadedFile $file)
     {
         $validator = \Validator::make(['file' => $file], ['file' => 'image']);
 
-        if ($validator->fails()) {
-            throw new \EnsoException($validator->errors()->first('file'));
-        }
+        return $validator->fails();
     }
 
     private function extensionIsMissing()
