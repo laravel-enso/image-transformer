@@ -31,9 +31,7 @@
     },
     "extra": {
         "laravel": {
-            "providers": [
-                "LaravelEnso\\ImageTransformer\\ImageTransformerServiceProvider"
-            ],
+            "providers": [ ],
             "aliases": {}
         }
     }
