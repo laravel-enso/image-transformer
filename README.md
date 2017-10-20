@@ -16,9 +16,9 @@ Image transformer dependency for [Laravel Enso](https://github.com/laravel-enso/
 - handles image cropping, using the [Intervention Image](https://github.com/intervention/image) library
 
 ### Under the Hood
-- handles missing libraries gracefully, logging the fact but allowing the upload.
+- handles missing libraries gracefully, logging the fact but does not throw an error
 
-### Installations
+### Installation
 
 In order for the optimization to work, you need to have the following packages installed:
 * pngquant
@@ -27,6 +27,11 @@ In order for the optimization to work, you need to have the following packages i
 * php7.1-gd or php-imagick
 
 On Linux, you can do that with: `sudo apt-get install pngquant gifsicle jpegoptim php7.1-gd`
+
+### Use
+The `ImageTransformer` class has 2 public methods:
+- `optimize`, which takes no argument and tries to optimize all the files given when building the class instance
+- `resize`, which takes the target width and height and resizes all the files given when building the class instance 
 
 ### Notes
 
