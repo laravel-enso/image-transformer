@@ -7,6 +7,7 @@ use ImageOptimizer\OptimizerFactory;
 
 class ImageTransformer
 {
+    private const SUPPORTED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
     private $files;
 
     public function __construct(array $files)
@@ -42,7 +43,7 @@ class ImageTransformer
 
     private function optimizeImage(UploadedFile $file)
     {
-        if ($this->fileIsNotPicture($file)) {
+        if ($this->fileTypeIsNotSupported($file)) {
             return false;
         }
 
@@ -52,7 +53,7 @@ class ImageTransformer
 
     private function resizeImage(UploadedFile $file, int $width, int $height)
     {
-        if ($this->fileIsNotPicture($file)) {
+        if ($this->fileTypeIsNotSupported($file)) {
             return false;
         }
 
@@ -73,9 +74,10 @@ class ImageTransformer
         $image->save($file->getRealPath());
     }
 
-    private function fileIsNotPicture(UploadedFile $file)
+    private function fileTypeIsNotSupported(UploadedFile $file)
     {
-        $validator = \Validator::make(['file' => $file], ['file' => 'image']);
+        $mimes = implode(",", self::SUPPORTED_MIME_TYPES);
+        $validator = \Validator::make(['file' => $file], ['file' => 'image|mimetypes:'.$mimes]);
 
         return $validator->fails();
     }
