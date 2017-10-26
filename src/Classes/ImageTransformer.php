@@ -76,7 +76,7 @@ class ImageTransformer
 
     private function fileTypeIsNotSupported(UploadedFile $file)
     {
-        $mimes = implode(",", self::SUPPORTED_MIME_TYPES);
+        $mimes = implode(',', self::SUPPORTED_MIME_TYPES);
         $validator = \Validator::make(['file' => $file], ['file' => 'image|mimetypes:'.$mimes]);
 
         return $validator->fails();
