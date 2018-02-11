@@ -18,7 +18,7 @@ class ImageTransformer
     public function optimize()
     {
         foreach ($this->files as $file) {
-            $this->optimizeImage($file);
+            // $this->optimizeImage($file);
         }
 
         return $this;
