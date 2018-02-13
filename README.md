@@ -12,7 +12,7 @@ Image transformer dependency for [Laravel Enso](https://github.com/laravel-enso/
 
 ### Features
 
-- handles image optimization, using the [Image Optimizer](https://github.com/psliwa/image-optimizer) library
+- handles image optimization, using the [Laravel Image Optimizer](https://github.com/spatie/laravel-image-optimizer) library
 - handles image cropping, using the [Intervention Image](https://github.com/intervention/image) library
 
 ### Under the Hood
@@ -28,10 +28,20 @@ In order for the optimization to work, you need to have the following packages i
 
 On Linux, you can do that with: `sudo apt-get install pngquant gifsicle jpegoptim php7.1-gd`
 
+**IMPORTANT NOTE:** 
+
+The underlying image processing libraries may use a lot of memory, 
+especially if the processed files are large (for example, for an 8MB file, more than 128MB of memory might be used ),
+so make sure to configure php accordingly and/or do `ini_set(‘memory_limit’, ‘256M’);`   
+
+Failure to do so may result in silent errors if alloted memory is insufficient.
+
 ### Use
 The `ImageTransformer` class has 2 public methods:
-- `optimize`, which takes no argument and tries to optimize all the files given when building the class instance
-- `resize`, which takes the target width and height and resizes all the files given when building the class instance 
+- `optimize`, takes no argument and tries to optimize the file
+- `resize`, takes the target width and height and resizes the file, possibly changing the aspect ration
+- `width`, resizes the file to the given width, maintaining aspect ratio
+- `height`, resizes the file to the given height, maintaining aspect ratio
 
 ### Notes
 
