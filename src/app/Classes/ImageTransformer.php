@@ -33,6 +33,7 @@ class ImageTransformer
         if ($image->width() > $width || $image->height() > $height) {
             $image->resize($width, $height);
         }
+
         $image->save($this->file->getRealPath());
 
         return $this;
@@ -71,23 +72,32 @@ class ImageTransformer
     private function checkFile($file)
     {
         if (!$file->isValid()) {
-            throw new ImageTransformerException(__('Invalid file :file', ['file' => $file->getClientOriginalName()]));
+            throw new ImageTransformerException(__(
+                'Invalid file :file',
+                ['file' => $file->getClientOriginalName()]
+            ));
         }
 
         $mimes = implode(',', self::SUPPORTED_MIME_TYPES);
-        $validator = \Validator::make(['file' => $file], ['file' => 'image|mimetypes:'.$mimes]);
+        $validator = \Validator::make(
+            ['file' => $file],
+            ['file' => 'image|mimetypes:'.$mimes]
+        );
 
         if ($validator->fails()) {
-            throw new ImageTransformerException(__('File type not supported for :file', ['file' => $file->getClientOriginalName()]));
+            throw new ImageTransformerException(__(
+                'File type not supported for :file',
+                ['file' => $file->getClientOriginalName()]
+            ));
         }
     }
 
     private function checkIfExtensionIsLoaded()
     {
         if (!extension_loaded('gd') && !extension_loaded('imagick')) {
-            throw new ImageTransformerException(
-                __('Extension missing. Please install php-gd or php-imagick extension to use the resize function')
-            );
+            throw new ImageTransformerException(__(
+                'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
+            ));
         }
     }
 
