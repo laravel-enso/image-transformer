@@ -14,7 +14,7 @@ Image transformer dependency for [Laravel Enso](https://github.com/laravel-enso/
 
 ### Configuration & Usage
 
-Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/packages/how-to-videos.html)
+Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/packages/image-transformer.html)
 
 ### Contributions
 
