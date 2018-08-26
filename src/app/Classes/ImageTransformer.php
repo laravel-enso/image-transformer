@@ -7,7 +7,7 @@ use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformerException;
 
 class ImageTransformer
 {
-    private const SUPPORTED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+    const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
     private $file;
     private $image;
@@ -78,7 +78,8 @@ class ImageTransformer
             ));
         }
 
-        $mimes = implode(',', self::SUPPORTED_MIME_TYPES);
+        $mimes = implode(',', self::SupportedMimeTypes);
+
         $validator = \Validator::make(
             ['file' => $file],
             ['file' => 'image|mimetypes:'.$mimes]
