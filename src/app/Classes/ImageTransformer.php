@@ -71,7 +71,7 @@ class ImageTransformer
 
     private function checkFile($file)
     {
-        if (!$file->isValid()) {
+        if (! $file->isValid()) {
             throw new ImageTransformerException(__(
                 'Invalid file :file',
                 ['file' => $file->getClientOriginalName()]
@@ -95,7 +95,7 @@ class ImageTransformer
 
     private function checkIfExtensionIsLoaded()
     {
-        if (!extension_loaded('gd') && !extension_loaded('imagick')) {
+        if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
             throw new ImageTransformerException(__(
                 'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
             ));
@@ -104,7 +104,7 @@ class ImageTransformer
 
     private function image()
     {
-        if (!isset($this->image)) {
+        if (! isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
             $this->image = \Image::make($this->file->getRealPath());
         }
