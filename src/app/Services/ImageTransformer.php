@@ -1,9 +1,12 @@
 <?php
 
-namespace LaravelEnso\ImageTransformer\app\Classes;
+namespace LaravelEnso\ImageTransformer\app\Services;
 
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\Facades\Image;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformerException;
+use LaravelEnso\ImageTransformer\app\Exceptions\MissingDependencyException;
 
 class ImageTransformer
 {
@@ -14,14 +17,14 @@ class ImageTransformer
 
     public function __construct(UploadedFile $file)
     {
-        $this->checkFile($file);
+        $this->validate($file);
 
         $this->file = $file;
     }
 
     public function optimize()
     {
-        \ImageOptimizer::optimize($this->file->getRealPath());
+        ImageOptimizer::optimize($this->file->getRealPath());
 
         return $this;
     }
@@ -69,9 +72,9 @@ class ImageTransformer
         return $this;
     }
 
-    private function checkFile($file)
+    private function validate($file)
     {
-        if (! $file->isValid()) {
+        if ($file instanceof UploadedFile && ! $file->isValid()) {
             throw new ImageTransformerException(__(
                 'Invalid file :file',
                 ['file' => $file->getClientOriginalName()]
@@ -93,22 +96,22 @@ class ImageTransformer
         }
     }
 
-    private function checkIfExtensionIsLoaded()
-    {
-        if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
-            throw new ImageTransformerException(__(
-                'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
-            ));
-        }
-    }
-
     private function image()
     {
         if (! isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
-            $this->image = \Image::make($this->file->getRealPath());
+            $this->image = Image::make($this->file->getRealPath());
         }
 
         return $this->image;
+    }
+
+    private function checkIfExtensionIsLoaded()
+    {
+        if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
+            throw new MissingDependencyException(__(
+                'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
+            ));
+        }
     }
 }

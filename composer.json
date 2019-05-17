@@ -1,13 +1,12 @@
 {
-    "name": "laravel-enso/imagetransformer",
+    "name": "laravel-enso/image-transformer",
     "description": "Image transformer dependency for Laravel Enso",
     "keywords": [
         "laravel-enso",
-        "imagetransformer",
         "image-transformer",
         "image-optimizer"
     ],
-    "homepage": "https://github.com/laravel-enso/ImageTransformer",
+    "homepage": "https://github.com/laravel-enso/image-transformer",
     "type": "library",
     "license": "MIT",
     "authors": [
