@@ -12,29 +12,7 @@ This package can work independently of the [Enso](https://github.com/laravel-ens
 
 For live examples and demos, you may visit [laravel-enso.com](https://www.laravel-enso.com)
 
-## Installation
-
-Comes pre-installed in Enso.
-
-To install outside of Enso: `composer require laravel-enso/imagetransformer`
-
-In order for the optimization to work, you need to have the following packages installed:
-* pngquant
-* gifsicle
-* jpegoptim
-* php7.1-gd or php-imagick
-
-On Linux, you can do that with: `sudo apt-get install pngquant gifsicle jpegoptim php7.1-gd`
-
-**IMPORTANT NOTE:** 
-
-The underlying image processing libraries may use a lot of memory, 
-especially if the processed files are large (for example, for an 8MB file, more than 128MB of memory might be used ),
-so make sure to configure php accordingly and/or do `ini_set(‘memory_limit’, ‘256M’);`   
-
-Failure to do so may result in silent errors if allotted memory is insufficient.
-
-### Configuration & Usage
+### Installation, Configuration & Usage
 
 Be sure to check out the full documentation for this package available at [docs.laravel-enso.com](https://docs.laravel-enso.com/backend/image-transformer.html)
 
