@@ -4,9 +4,9 @@ namespace LaravelEnso\ImageTransformer\app\Services;
 
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformerException;
 use LaravelEnso\ImageTransformer\app\Exceptions\MissingDependencyException;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ImageTransformer
 {
