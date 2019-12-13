@@ -4,13 +4,13 @@ namespace LaravelEnso\ImageTransformer\app\Services;
 
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
-use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformerException;
-use LaravelEnso\ImageTransformer\app\Exceptions\MissingDependencyException;
+use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformer as ImageTransformerException;
+use LaravelEnso\ImageTransformer\app\Exceptions\MissingDependency as MissingDependencyException;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ImageTransformer
 {
-    const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+    public const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
     private $file;
     private $image;
@@ -75,10 +75,7 @@ class ImageTransformer
     private function validate($file)
     {
         if ($file instanceof UploadedFile && ! $file->isValid()) {
-            throw new ImageTransformerException(__(
-                'Invalid file :file',
-                ['file' => $file->getClientOriginalName()]
-            ));
+            throw ImageTransformerException::invalidFile($file->getClientOriginalName());
         }
 
         $mimes = implode(',', self::SupportedMimeTypes);
@@ -89,10 +86,7 @@ class ImageTransformer
         );
 
         if ($validator->fails()) {
-            throw new ImageTransformerException(__(
-                'File type not supported for :file',
-                ['file' => $file->getClientOriginalName()]
-            ));
+            throw ImageTransformerException::unsupportedType($file->getClientOriginalName());
         }
     }
 
@@ -109,9 +103,7 @@ class ImageTransformer
     private function checkIfExtensionIsLoaded()
     {
         if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
-            throw new MissingDependencyException(__(
-                'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
-            ));
+            throw MissingDependencyException::extension();
         }
     }
 }
