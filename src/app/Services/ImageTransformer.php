@@ -2,6 +2,7 @@
 
 namespace LaravelEnso\ImageTransformer\app\Services;
 
+use Validator;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformer as ImageTransformerException;
@@ -47,9 +48,9 @@ class ImageTransformer
         $image = $this->image();
 
         if ($image->width() > $width) {
-            $image->resize($width, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $image->resize($width, null, fn($constraint) => (
+                $constraint->aspectRatio()
+            ));
         }
 
         $image->save($this->file->getRealPath());
@@ -62,9 +63,9 @@ class ImageTransformer
         $image = $this->image();
 
         if ($image->height() > $height) {
-            $image->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $image->resize(null, $height, fn($constraint) => (
+                $constraint->aspectRatio()
+            ));
         }
 
         $image->save($this->file->getRealPath());
@@ -80,7 +81,7 @@ class ImageTransformer
 
         $mimes = implode(',', self::SupportedMimeTypes);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             ['file' => $file],
             ['file' => 'image|mimetypes:'.$mimes]
         );
