@@ -1,19 +1,21 @@
 <?php
 
-namespace LaravelEnso\ImageTransformer\app\Services;
+namespace LaravelEnso\ImageTransformer\App\Services;
 
 use Illuminate\Http\UploadedFile;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image as Facade;
+use Intervention\Image\Image;
+use LaravelEnso\ImageTransformer\App\Exceptions\Dependency;
+use LaravelEnso\ImageTransformer\App\Exceptions\File;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
-use LaravelEnso\ImageTransformer\app\Exceptions\ImageTransformerException;
-use LaravelEnso\ImageTransformer\app\Exceptions\MissingDependencyException;
 
 class ImageTransformer
 {
-    const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+    public const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
-    private $file;
-    private $image;
+    private UploadedFile $file;
+    private Image $image;
 
     public function __construct(UploadedFile $file)
     {
@@ -22,14 +24,14 @@ class ImageTransformer
         $this->file = $file;
     }
 
-    public function optimize()
+    public function optimize(): self
     {
         ImageOptimizer::optimize($this->file->getRealPath());
 
         return $this;
     }
 
-    public function resize(int $width, int $height)
+    public function resize(int $width, int $height): self
     {
         $image = $this->image();
 
@@ -42,14 +44,12 @@ class ImageTransformer
         return $this;
     }
 
-    public function width(int $width)
+    public function width(int $width): self
     {
         $image = $this->image();
 
         if ($image->width() > $width) {
-            $image->resize($width, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $image->resize($width, null, fn ($constraint) => $constraint->aspectRatio());
         }
 
         $image->save($this->file->getRealPath());
@@ -57,14 +57,12 @@ class ImageTransformer
         return $this;
     }
 
-    public function height(int $height)
+    public function height(int $height): self
     {
         $image = $this->image();
 
         if ($image->height() > $height) {
-            $image->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $image->resize(null, $height, fn ($constraint) => $constraint->aspectRatio());
         }
 
         $image->save($this->file->getRealPath());
@@ -72,35 +70,29 @@ class ImageTransformer
         return $this;
     }
 
-    private function validate($file)
+    private function validate(UploadedFile $file): void
     {
-        if ($file instanceof UploadedFile && ! $file->isValid()) {
-            throw new ImageTransformerException(__(
-                'Invalid file :file',
-                ['file' => $file->getClientOriginalName()]
-            ));
+        if (! $file->isValid()) {
+            throw File::invalid($file);
         }
 
         $mimes = implode(',', self::SupportedMimeTypes);
 
-        $validator = \Validator::make(
+        $validator = Validator::make(
             ['file' => $file],
-            ['file' => 'image|mimetypes:'.$mimes]
+            ['file' => "image|mimetypes:{$mimes}"]
         );
 
         if ($validator->fails()) {
-            throw new ImageTransformerException(__(
-                'File type not supported for :file',
-                ['file' => $file->getClientOriginalName()]
-            ));
+            throw File::notSupported($file);
         }
     }
 
-    private function image()
+    private function image(): Image
     {
         if (! isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
-            $this->image = Image::make($this->file->getRealPath());
+            $this->image = Facade::make($this->file->getRealPath());
         }
 
         return $this->image;
@@ -109,9 +101,7 @@ class ImageTransformer
     private function checkIfExtensionIsLoaded()
     {
         if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
-            throw new MissingDependencyException(__(
-                'Extension missing. Please install php-gd or php-imagick extension to use the resize function'
-            ));
+            throw Dependency::missing();
         }
     }
 }
