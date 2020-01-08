@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelEnso\ImageTransformer\app\Exceptions;
+namespace LaravelEnso\ImageTransformer\App\Exceptions;
 
-use LaravelEnso\Helpers\app\Exceptions\EnsoException;
+use LaravelEnso\Helpers\App\Exceptions\EnsoException;
 
 class MissingDependency extends EnsoException
 {
