@@ -2,22 +2,23 @@
 
 namespace LaravelEnso\ImageTransformer\App\Services;
 
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image as Facade;
 use Intervention\Image\Image;
 use LaravelEnso\ImageTransformer\App\Exceptions\Dependency;
-use LaravelEnso\ImageTransformer\App\Exceptions\File;
+use LaravelEnso\ImageTransformer\App\Exceptions\File as Exception;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageTransformer
 {
     public const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
-    private UploadedFile $file;
+    private File $file;
     private Image $image;
 
-    public function __construct(UploadedFile $file)
+    public function __construct(File $file)
     {
         $this->validate($file);
 
@@ -70,10 +71,10 @@ class ImageTransformer
         return $this;
     }
 
-    private function validate(UploadedFile $file): void
+    private function validate(File $file): void
     {
-        if (! $file->isValid()) {
-            throw File::invalid($file);
+        if ($file instanceof UploadedFile && ! $file->isValid()) {
+            throw Exception::invalid($file);
         }
 
         $mimes = implode(',', self::SupportedMimeTypes);
@@ -84,7 +85,7 @@ class ImageTransformer
         );
 
         if ($validator->fails()) {
-            throw File::notSupported($file);
+            throw Exception::notSupported($file);
         }
     }
 
