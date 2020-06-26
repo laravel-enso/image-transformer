@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelEnso\ImageTransformer\App\Exceptions;
+namespace LaravelEnso\ImageTransformer\Exceptions;
 
-use LaravelEnso\Helpers\App\Exceptions\EnsoException;
+use LaravelEnso\Helpers\Exceptions\EnsoException;
 
 class Dependency extends EnsoException
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace LaravelEnso\ImageTransformer\App\Services;
+namespace LaravelEnso\ImageTransformer\Services;
 
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image as Facade;
 use Intervention\Image\Image;
-use LaravelEnso\ImageTransformer\App\Exceptions\Dependency;
-use LaravelEnso\ImageTransformer\App\Exceptions\File as Exception;
+use LaravelEnso\ImageTransformer\Exceptions\Dependency;
+use LaravelEnso\ImageTransformer\Exceptions\File as Exception;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
