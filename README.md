@@ -1,6 +1,6 @@
 # Image Transformer
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/49a59dad1899460fa451510ef96307bb)](https://www.codacy.com/app/laravel-enso/ImageTransformer?utm_source=github.com&utm_medium=referral&utm_content=laravel-enso/ImageTransformer&utm_campaign=badger)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/99b147a473854c5bba33e7f8b83e35ba)](https://www.codacy.com/gh/laravel-enso/image-transformer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=laravel-enso/image-transformer&amp;utm_campaign=Badge_Grade) 
 [![StyleCI](https://github.styleci.io/repos/96102464/shield?branch=master)](https://github.styleci.io/repos/96102464)
 [![License](https://poser.pugx.org/laravel-enso/image-transformer/license)](https://packagist.org/packages/laravel-enso/image-transformer)
 [![Total Downloads](https://poser.pugx.org/laravel-enso/image-transformer/downloads)](https://packagist.org/packages/laravel-enso/image-transformer)
