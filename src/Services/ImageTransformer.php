@@ -15,14 +15,11 @@ class ImageTransformer
 {
     public const SupportedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
 
-    private File $file;
     private Image $image;
 
-    public function __construct(File $file)
+    public function __construct(private File $file)
     {
         $this->validate($file);
-
-        $this->file = $file;
     }
 
     public function optimize(): self
