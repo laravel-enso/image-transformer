@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "laravel/framework": "^10.0",
+        "laravel/framework": "^10.0|^11.0",
         "laravel-enso/helpers": "^3.0",
         "intervention/image": "^2.5",
         "php": "^8.0",
@@ -33,7 +33,7 @@
     "extra": {
         "laravel": {
             "providers": [],
-            "aliases": {}
+            "aliases": []
         }
     }
 }
