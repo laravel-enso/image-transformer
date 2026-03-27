@@ -3,8 +3,8 @@
 namespace LaravelEnso\ImageTransformer\Services;
 
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image as Facade;
 use Intervention\Image\Image;
+use Intervention\Image\Laravel\Facades\Image as Facade;
 use LaravelEnso\ImageTransformer\Exceptions\Dependency;
 use LaravelEnso\ImageTransformer\Exceptions\File as Exception;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -90,7 +90,7 @@ class ImageTransformer
     {
         if (! isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
-            $this->image = Facade::make($this->file->getRealPath());
+            $this->image = Facade::read($this->file);
         }
 
         return $this->image;
