@@ -31,13 +31,8 @@ class ImageTransformer
 
     public function resize(int $width, int $height): self
     {
-        $image = $this->image();
-
-        if ($image->width() > $width || $image->height() > $height) {
-            $image->resize($width, $height);
-        }
-
-        $image->save($this->file->getRealPath());
+        $this->width($width);
+        $this->height($height);
 
         return $this;
     }
