@@ -5,6 +5,7 @@
 [![Downloads](https://poser.pugx.org/laravel-enso/image-transformer/downloads)](https://packagist.org/packages/laravel-enso/image-transformer)
 [![PHP](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](composer.json)
 [![Issues](https://img.shields.io/github/issues/laravel-enso/image-transformer.svg)](https://github.com/laravel-enso/image-transformer/issues)
+[![Merge Requests](https://img.shields.io/github/issues-pr/laravel-enso/image-transformer.svg)](https://github.com/laravel-enso/image-transformer/pulls)
 
 ## Description
 
