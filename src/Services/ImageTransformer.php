@@ -65,7 +65,7 @@ class ImageTransformer
 
     private function validate(File $file): void
     {
-        if ($file instanceof UploadedFile && ! $file->isValid()) {
+        if ($file instanceof UploadedFile && !$file->isValid()) {
             throw Exception::invalid($file);
         }
 
@@ -83,7 +83,7 @@ class ImageTransformer
 
     private function image(): Image
     {
-        if (! isset($this->image)) {
+        if (!isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
             $this->image = Facade::read($this->file);
         }
@@ -93,7 +93,7 @@ class ImageTransformer
 
     private function checkIfExtensionIsLoaded()
     {
-        if (! extension_loaded('gd') && ! extension_loaded('imagick')) {
+        if (!extension_loaded('gd') && !extension_loaded('imagick')) {
             throw Dependency::missing();
         }
     }
