@@ -40,7 +40,9 @@ To use resizing, the runtime must have at least one supported image extension in
 - Optimizes images in place through Spatie's optimizer chain.
 - Resizes images proportionally by width, by height, or by both through `resize()`.
 - Prevents upsizing by only resizing when the original image is larger than the requested dimension.
-- Saves transformations back to the original file path.
+- Upscales images proportionally to minimum dimensions through `upscaleTo()`.
+- Encodes transformed images as JPEG bytes through `toJpeg()`.
+- Saves downscale transformations back to the original file path while keeping upscale and encoding operations in memory.
 
 ## Usage
 
@@ -76,10 +78,20 @@ Apply both constraints in sequence:
 $transformer->resize(1024, 768);
 ```
 
+Upscale proportionally until both minimum dimensions are reached, then encode the result as JPEG without modifying the original file:
+
+```php
+$contents = $transformer
+    ->upscaleTo(500, 500)
+    ->toJpeg(quality: 85);
+```
+
 ::: tip Tip
 The transformer edits the original file in place.
 
 If you need to preserve the original upload, copy or move it before calling `optimize()`, `width()`, `height()`, or `resize()`.
+
+`upscaleTo()` and `toJpeg()` operate in memory and do not modify the original file.
 :::
 
 ## API
@@ -96,6 +108,8 @@ Public methods:
 
 - `optimize(): self`
 - `resize(int $width, int $height): self`
+- `upscaleTo(int $width, int $height): self`
+- `toJpeg(int $quality = 85): string`
 - `width(int $width): self`
 - `height(int $height): self`
 

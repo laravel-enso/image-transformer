@@ -38,6 +38,35 @@ class ImageTransformer
         return $this;
     }
 
+    public function upscaleTo(int $width, int $height): self
+    {
+        $image = $this->image();
+        $width = max(1, $width);
+        $height = max(1, $height);
+        $scale = max(
+            $width / $image->width(),
+            $height / $image->height(),
+            1,
+        );
+
+        if ($scale > 1) {
+            $this->image = $image->resize(
+                width: (int) ceil($image->width() * $scale),
+                height: (int) ceil($image->height() * $scale),
+            );
+        }
+
+        return $this;
+    }
+
+    public function toJpeg(int $quality = 85): string
+    {
+        return $this->image()
+            ->toJpeg()
+            ->quality($quality)
+            ->toBytes();
+    }
+
     public function width(int $width): self
     {
         $image = $this->image();
