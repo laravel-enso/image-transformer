@@ -43,6 +43,8 @@ To use resizing, the runtime must have at least one supported image extension in
 - Upscales images proportionally to minimum dimensions through `upscaleTo()`.
 - Encodes transformed images as JPEG bytes through `toJpeg()`.
 - Saves downscale transformations back to the original file path while keeping upscale and encoding operations in memory.
+- Keeps chained width and height transformations in one processing pipeline to avoid intermediate re-encoding.
+- Preserves the previous default encoding quality for in-place transformations.
 
 ## Usage
 
