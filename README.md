@@ -3,7 +3,7 @@
 [![License](https://poser.pugx.org/laravel-enso/image-transformer/license)](LICENSE)
 [![Stable](https://poser.pugx.org/laravel-enso/image-transformer/version)](https://packagist.org/packages/laravel-enso/image-transformer)
 [![Downloads](https://poser.pugx.org/laravel-enso/image-transformer/downloads)](https://packagist.org/packages/laravel-enso/image-transformer)
-[![PHP](https://img.shields.io/badge/php-8.0%2B-777bb4.svg)](composer.json)
+[![PHP](https://img.shields.io/badge/php-8.3%2B-777bb4.svg)](composer.json)
 [![Issues](https://img.shields.io/github/issues/laravel-enso/image-transformer.svg)](https://github.com/laravel-enso/image-transformer/issues)
 [![Merge Requests](https://img.shields.io/github/issues-pr/laravel-enso/image-transformer.svg)](https://github.com/laravel-enso/image-transformer/pulls)
 
@@ -11,7 +11,7 @@
 
 Image Transformer provides a small service for validating, resizing, and optimizing uploaded images.
 
-It wraps Intervention Image for resize operations and Spatie's image optimizer for post-processing, while enforcing a limited set of supported image mime types before any transformation is attempted.
+It uses Laravel's image service, backed by Intervention Image, for resize operations and Spatie's image optimizer for post-processing, while enforcing a limited set of supported image mime types before any transformation is attempted.
 
 The package is useful in upload flows where images should be normalized before storage, for example avatars, covers, gallery images, or document attachments that need size limits and optimization.
 
@@ -23,9 +23,9 @@ Install the package:
 composer require laravel-enso/image-transformer
 ```
 
-The package relies on:
+The package requires Laravel 13.20 or newer and relies on:
 
-- `intervention/image-laravel` for reading and resizing images
+- Laravel's image service and `intervention/image` 4 for reading and resizing images
 - `spatie/laravel-image-optimizer` for optimization
 
 To use resizing, the runtime must have at least one supported image extension installed:
@@ -129,7 +129,7 @@ Required Enso packages:
 
 External dependencies:
 
-- [`intervention/image-laravel`](https://github.com/Intervention/image-laravel) [↗](https://github.com/Intervention/image-laravel)
+- [`intervention/image`](https://github.com/Intervention/image) [↗](https://github.com/Intervention/image)
 - [`spatie/laravel-image-optimizer`](https://github.com/spatie/laravel-image-optimizer) [↗](https://github.com/spatie/laravel-image-optimizer)
 
 ## Contributions

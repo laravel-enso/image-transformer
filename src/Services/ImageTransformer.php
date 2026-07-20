@@ -2,9 +2,10 @@
 
 namespace LaravelEnso\ImageTransformer\Services;
 
+use Illuminate\Image\Image;
+use Illuminate\Support\Facades\File as Filesystem;
+use Illuminate\Support\Facades\Image as Facade;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Image;
-use Intervention\Image\Laravel\Facades\Image as Facade;
 use LaravelEnso\ImageTransformer\Exceptions\Dependency;
 use LaravelEnso\ImageTransformer\Exceptions\File as Exception;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -42,10 +43,10 @@ class ImageTransformer
         $image = $this->image();
 
         if ($image->width() > $width) {
-            $image->resize($width, null, fn ($constraint) => $constraint->aspectRatio());
+            $this->image = $image->scale(width: $width);
         }
 
-        $image->save($this->file->getRealPath());
+        $this->save();
 
         return $this;
     }
@@ -55,10 +56,10 @@ class ImageTransformer
         $image = $this->image();
 
         if ($image->height() > $height) {
-            $image->resize(null, $height, fn ($constraint) => $constraint->aspectRatio());
+            $this->image = $image->scale(height: $height);
         }
 
-        $image->save($this->file->getRealPath());
+        $this->save();
 
         return $this;
     }
@@ -85,10 +86,15 @@ class ImageTransformer
     {
         if (!isset($this->image)) {
             $this->checkIfExtensionIsLoaded();
-            $this->image = Facade::read($this->file);
+            $this->image = Facade::fromPath($this->file->getRealPath());
         }
 
         return $this->image;
+    }
+
+    private function save(): void
+    {
+        Filesystem::put($this->file->getRealPath(), $this->image->toBytes());
     }
 
     private function checkIfExtensionIsLoaded()
